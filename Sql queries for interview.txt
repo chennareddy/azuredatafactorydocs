@@ -1,0 +1,27 @@
+write a query to print highest and lowest salary emp in each department
+
+
+select *from employee
+order by dept_id
+
+
+two ways:
+********
+
+case when and aggregation,join
+
+ranking
+
+
+with cte as(
+select dept_id,min(salary) as min_sal,max(salary) as max_sal
+from employee
+group by dept_id)
+
+select e.*,min_sal,max_sal
+,case when salary=max_sal then emp_name else null end as max_sal_emp
+,case when salary=min_sal then emp_name else null end as min_sal_emp
+from employee e
+ inner join cte on e.dept_id=cte.dept_id
+
+
